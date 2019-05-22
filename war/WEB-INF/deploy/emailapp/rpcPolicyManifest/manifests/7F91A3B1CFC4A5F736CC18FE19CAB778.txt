@@ -1,0 +1,2 @@
+serviceClass: com.ncdc.emailApp.client.service.Service
+path: 4FFD038A6BE0615127424E727CDEB7F6.gwt.rpc
