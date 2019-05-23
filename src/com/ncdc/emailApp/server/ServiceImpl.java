@@ -10,29 +10,13 @@ public class ServiceImpl extends RemoteServiceServlet implements Service{
 	private String phoneFromClient;
 	private String emailFromClient;
 
-	
 	@Override
-	public void setName(String name) {
+	public void sendEmail(String name, String surname, String phone, String email) {
 		nameFromClient = name;
-	}
-
-	@Override
-	public void setSurname(String surname) {
 		surnameFromClient = surname;
-	}
-
-	@Override
-	public void setPhone(String phone) {
 		phoneFromClient = phone;
-	}
-
-	@Override
-	public void setEmailAddress(String emailAddress) {
-		emailFromClient = emailAddress;
-	}
-
-	@Override
-	public void sendEmail() {
-		
+		emailFromClient = email;
+		System.out.println("\n\nName: " + nameFromClient + "\nSurname: " + surnameFromClient 
+				+ "\nPhone number: " + phoneFromClient + "\nEmail address" + emailFromClient);
 	}
 }

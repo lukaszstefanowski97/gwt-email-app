@@ -1,3 +1,0 @@
-# Module emailapp
-# RPC service class, partial path of RPC policy file
-com.ncdc.emailApp.client.service.Service, 4FFD038A6BE0615127424E727CDEB7F6.gwt.rpc
