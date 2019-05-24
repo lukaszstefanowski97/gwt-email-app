@@ -40,8 +40,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service{
 				+ "\nNewsletter: " + newsletterFromClient;
 		System.out.println(message);
 		
-		String from = "testingemailapp2019@gmail.com";
-		String password = "PASSword123";
+		String from = ""; //please input your email address here
+		String password = ""; //please input your password here
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
         	props.put("mail.smtp.port", 587);
