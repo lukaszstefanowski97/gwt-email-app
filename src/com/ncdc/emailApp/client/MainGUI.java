@@ -20,7 +20,9 @@ public class MainGUI extends Composite {
 	private Label emailResult = new Label();
 	private Label sendingResult = new Label();
 	private ClientImpl clientImpl;
-	private Validation validation;
+	private Validation validation = new ValidationImpl();
+	private RadioButton radioButton1;
+	private RadioButton radioButton2;
 
 	public MainGUI(ClientImpl client) {
 		initWidget(this.vPanel);
@@ -55,9 +57,9 @@ public class MainGUI extends Composite {
 		horizontalPanels.add(hPanelEmail);
 		
 		HorizontalPanel hPanelRadio = new HorizontalPanel();
-		RadioButton radioButton1 = new RadioButton("radioGroup", "Subscribe to newsletter");
+		radioButton1 = new RadioButton("radioGroup", "Subscribe to newsletter");
 		radioButton1.setValue(true);
-		RadioButton radioButton2 = new RadioButton("radioGroup", "Don't subscribe to newsletter");
+		radioButton2 = new RadioButton("radioGroup", "Don't subscribe to newsletter");
 		radioButton2.setValue(false);
 		hPanelRadio.add(radioButton1);
 		hPanelRadio.add(radioButton2);
@@ -105,7 +107,8 @@ public class MainGUI extends Composite {
 			String surname = surnameBox.getText();
 			String phone = phoneBox.getText();
 			String email = emailBox.getText();
-			
+			boolean newsletter = false;
+
 			if (!validation.validateNameOrSurname(name)) {
 				updateNameResult("Invalid input");
 			} else {
@@ -114,28 +117,32 @@ public class MainGUI extends Composite {
 			}
 			
 			if (!validation.validateNameOrSurname(surname)) {
-				updateNameResult("Invalid input");
+				updateSurnameResult("Invalid input");
 			} else {
 				++correctDataAmount;
-				updateNameResult("Surname saved");
+				updateSurnameResult("Surname saved");
 			}
 			
 			if (!validation.validatePhone(phone)) {
-				updateNameResult("Invalid input");
+				updatePhoneResult("Invalid input");
 			} else {
 				++correctDataAmount;
-				updateNameResult("Phone saved");
+				updatePhoneResult("Phone saved");
 			}
 			
 			if (!validation.validateEmail(email)) {
-				updateNameResult("Invalid input");
+				updateEmailResult("Invalid input");
 			} else {
 				++correctDataAmount;
-				updateNameResult("Email saved");
+				updateEmailResult("Email saved");
+			}
+			
+			if (radioButton1.isChecked()) {
+				newsletter = true;
 			}
 			
 			if (correctDataAmount > 3) {
-				clientImpl.sendEmail(name, surname, phone, email);
+				clientImpl.sendEmail(name, surname, phone, email, newsletter);
 			}
 		}
 	}

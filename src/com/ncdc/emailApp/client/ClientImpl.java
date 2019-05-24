@@ -25,8 +25,8 @@ public class ClientImpl implements Client {
 	}
 
 	@Override
-	public void sendEmail(String name, String surname, String phone, String email) {
-			this.service.sendEmail(name, surname, phone, email, new SendEmailCallback());
+	public void sendEmail(String name, String surname, String phone, String email, boolean newsletter) {
+			this.service.sendEmail(name, surname, phone, email, newsletter, new SendEmailCallback());
 	}
 	
 	public class SendEmailCallback implements AsyncCallback {
