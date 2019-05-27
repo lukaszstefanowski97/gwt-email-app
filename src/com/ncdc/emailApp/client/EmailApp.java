@@ -10,5 +10,6 @@ public class EmailApp implements EntryPoint {
 	public void onModuleLoad() {
 		ClientImpl client = new ClientImpl(GWT.getModuleBaseURL() + "service");
 		RootPanel.get().add(client.getMainGUI());
+		RootPanel.get().add(new UI(client));
 	}
 }

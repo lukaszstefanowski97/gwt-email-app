@@ -21,6 +21,7 @@
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.ncdc.emailApp.client.EmailApp'/>
+  <set-configuration-property name="devModeUrlWhitelistRegexp" value="http://(localhost|127\.0\.0\.1|192\.168\.150\.(\d{1,3}))(:\d+)?/?.*" />
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>

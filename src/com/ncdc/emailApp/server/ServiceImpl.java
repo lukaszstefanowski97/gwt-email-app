@@ -1,14 +1,9 @@
 package com.ncdc.emailApp.server;
 
-import java.util.*;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.ncdc.emailApp.client.service.Service;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
-import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
