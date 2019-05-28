@@ -15,28 +15,19 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class ServiceImpl extends RemoteServiceServlet implements Service{
-	
-	private String nameFromClient;
-	private String surnameFromClient;
-	private String phoneFromClient;
-	private String emailFromClient;
-	private boolean newsletterFromClient;
-	private String message;
 
-	@Override
-	public void sendEmail(String name, String surname, String phone, String email, boolean newsletter) {
-		nameFromClient = name;
-		surnameFromClient = surname;
-		phoneFromClient = phone;
-		emailFromClient = email;
-		newsletterFromClient = newsletter;
-		message = "\n\nName: " + nameFromClient + "\nSurname: " + surnameFromClient 
-				+ "\nPhone number: " + phoneFromClient + "\nEmail address: " + emailFromClient
-				+ "\nNewsletter: " + newsletterFromClient;
-		System.out.println(message);
+	String from = ""; //please input your email address here
+	String password = ""; //please input your password here
+
+	private String generateMessage(String name, String surname, String phone, 
+			String email, boolean newsletter) {
 		
-		String from = ""; //please input your email address here
-		String password = ""; //please input your password here
+		return "\n\nName: " + name + "\nSurname: " + surname 
+				+ "\nPhone number: " + phone + "\nEmail address: " + email
+				+ "\nNewsletter: " + newsletter;
+	}
+	
+	private Properties setUpProperties() {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
         	props.put("mail.smtp.port", 587);
@@ -44,8 +35,34 @@ public class ServiceImpl extends RemoteServiceServlet implements Service{
         	props.put("mail.smtp.starttls.enable", "true");
         	props.put("mail.user", from);
         	props.put("mail.password", password);
+        	
+        return props;
+	}
+	
+	private void transportEmail(Session session, String email, String message) {
+		try {
+			  Message msg = new MimeMessage(session);
+			  msg.setFrom(new InternetAddress(from));
+			  msg.addRecipient(Message.RecipientType.TO,
+			                   new InternetAddress(email));
+			  msg.setSubject("EmailApp");
+			  msg.setText(message);
+			  Transport.send(msg);
+			} catch (AddressException e) {
+			  System.out.println("Address exception\n" + e);
+			} catch (MessagingException e) {
+			  System.out.println("Message exception\n" + e);
+			}
+	}
+
+	@Override
+	public void sendEmail(String name, String surname, String phone, String email, 
+			boolean newsletter) {
+		
+		String message = generateMessage(name, surname, phone, email, newsletter);
+		System.out.println(message);
   
-		Session session = Session.getDefaultInstance(props, new Authenticator() {
+		Session session = Session.getDefaultInstance(setUpProperties(), new Authenticator() {
 			
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -53,19 +70,6 @@ public class ServiceImpl extends RemoteServiceServlet implements Service{
 			}
 		});
 
-		try {
-		  Message msg = new MimeMessage(session);
-		  msg.setFrom(new InternetAddress(from));
-		  msg.addRecipient(Message.RecipientType.TO,
-		                   new InternetAddress(emailFromClient));
-		  msg.setSubject("EmailApp");
-		  msg.setText(message);
-		  Transport.send(msg);
-		  System.out.println("\nEmail sent");
-		} catch (AddressException e) {
-		  System.out.println("\nAddress Exception");
-		} catch (MessagingException e) {
-		  System.out.println("\nMessage Exception");
-		}
+		transportEmail(session, email, message);
 	}
 }

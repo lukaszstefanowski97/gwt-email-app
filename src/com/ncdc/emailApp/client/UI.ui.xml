@@ -20,12 +20,8 @@
 				<g:TextBox ui:field='emailBox'/>
 			</tr>
 			<tr>
-				<g:RadioButton ui:field="radioButton1" name="radio">
-					Subscribe to newsletter
-				</g:RadioButton>
-				<g:RadioButton ui:field="radioButton2" name="radio">
-					Don't subscribe to newsletter
-				</g:RadioButton>
+				<g:RadioButton ui:field="radioButton1" name="radio"/>
+				<g:RadioButton ui:field="radioButton2" name="radio"/>
 			</tr>
 			<tr>
 				<g:Button ui:field="button">Send email</g:Button>

@@ -33,12 +33,12 @@ public class ClientImpl implements Client {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			System.out.println("An error has occured");
+			System.out.println(Messages.SENDING_ERROR);
 		}
 
 		@Override
 		public void onSuccess(Object result) {
-			maingui.updateSendingResult("Email sent");
+			System.out.println(Messages.EMAIL_SENT);
 		}
 	}
 }

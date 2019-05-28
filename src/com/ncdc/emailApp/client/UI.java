@@ -7,6 +7,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -39,6 +40,12 @@ public class UI extends Composite {
 	@UiField
 	Button button;
 	
+//	@UiField
+//	Label newsletter = new Label();
+//	
+//	@UiField
+//	Label notNewsletter = new Label();
+	
 	private Validation validation = new ValidationImpl();
 	
 	private ClientImpl clientImpl;
@@ -47,52 +54,21 @@ public class UI extends Composite {
 		this.clientImpl = client;
 		initWidget(uiBinder.createAndBindUi(this));
 		button.addClickHandler(new SendingButtonClickHandler());
+		this.radioButton1.setText(Messages.NEWSLETTER);
+		this.radioButton2.setText(Messages.NOT_NEWSLETTER);
 	}
 	
 	private class SendingButtonClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			int correctDataAmount = 0;
-			String name = nameBox.getText();
-			String surname = surnameBox.getText();
-			String phone = phoneBox.getText();
-			String email = emailBox.getText();
-			boolean newsletter = false;
-
-			if (!validation.validateNameOrSurname(name)) {
-				nameBox.setText("Invalid input");
-			} else {
-				++correctDataAmount;
-				nameBox.setText("Name saved");
-			}
+			final String name = nameBox.getText();
+			final String surname = surnameBox.getText();
+			final String phone = phoneBox.getText();
+			final String email = emailBox.getText();
+			final boolean newsletter = radioButton1.getValue();
 			
-			if (!validation.validateNameOrSurname(surname)) {
-				surnameBox.setText("Invalid input");
-			} else {
-				++correctDataAmount;
-				surnameBox.setText("Surname saved");
-			}
-			
-			if (!validation.validatePhone(phone)) {
-				phoneBox.setText("Invalid input");
-			} else {
-				++correctDataAmount;
-				phoneBox.setText("Phone number saved");
-			}
-			
-			if (!validation.validateEmail(email)) {
-				emailBox.setText("Invalid input");
-			} else {
-				++correctDataAmount;
-				emailBox.setText("Email address saved");
-			}
-			
-			if (radioButton1.isChecked()) {
-				newsletter = true;
-			}
-			
-			if (correctDataAmount > 3) {
+			if (validation.validate(name, surname, phone, email)) {
 				clientImpl.sendEmail(name, surname, phone, email, newsletter);
 			}
 		}
