@@ -4,7 +4,7 @@ This app is able to send an email using Google Mail API.
 
 **PREREQUISITES:**
 - Java 8 or higher
-- Eclipse with GWT Plugin
+- GWT Plugin to your IDE of choice
 
 Before using please check if your email address is going to work with Google Mail API.
 
